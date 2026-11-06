@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10131c">
+  <meta name="description" content="Aprenda, na prática, como funciona a criptografia e a descriptografia com AES-GCM no seu navegador.">
+  <title>CriptoLab — criptografia na prática</title>
+  <style>
+    :root{color-scheme:dark;--bg:#10131c;--panel:#181c28;--panel2:#202535;--line:#30374b;--text:#f4f5fb;--muted:#a3abc0;--accent:#9af0c1;--accent2:#72d9a1;--pink:#ff8da1;--blue:#8eb8ff;--radius:18px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#263349 0,transparent 35%),radial-gradient(ellipse at 90% 15%,#263629 0,transparent 29%),var(--bg);color:var(--text);min-height:100vh;line-height:1.55}button,input,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1120px;padding:32px 22px 70px;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:62px}.brand{display:flex;gap:12px;align-items:center;font-weight:750;letter-spacing:-.03em}.brand-mark{width:38px;height:38px;border-radius:12px;background:var(--accent);color:#13231a;display:grid;place-items:center;font-size:21px}.tag{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{max-width:790px;margin-bottom:34px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--accent);font-weight:750}.hero h1{font-size:clamp(38px,7vw,68px);line-height:1.04;letter-spacing:-.065em;margin:15px 0 17px}.hero h1 span{color:var(--accent)}.hero p{color:var(--muted);font-size:17px;max-width:680px;margin:0}.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(310px,.9fr);gap:18px;align-items:start}.card{background:linear-gradient(150deg,rgba(29,34,49,.97),rgba(22,25,36,.97));border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 18px 55px #0002}.card h2{font-size:17px;margin:0 0 6px;letter-spacing:-.02em}.sub{color:var(--muted);font-size:13px;margin:0 0 21px}.field{margin:18px 0}.label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.label-row label{font-size:13px;font-weight:650}.hint{font-size:11px;color:var(--muted)}.input-wrap{position:relative}input,textarea{width:100%;border:1px solid #394158;border-radius:11px;background:#111520;color:var(--text);padding:12px 14px;outline:none;transition:border .2s,box-shadow .2s}input:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #72d9a122}textarea{resize:vertical;min-height:105px;line-height:1.5}input[type=password],input[type=text]{min-height:46px}.toggle{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--muted);font-size:12px;padding:6px}.with-toggle{padding-right:60px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.primary,.secondary,.copy{border:0;border-radius:10px;padding:11px 16px;font-weight:750}.primary{background:var(--accent);color:#122018}.primary:hover{background:#b4f7d1}.secondary,.copy{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.secondary:hover,.copy:hover{border-color:#65718c}.feedback{min-height:22px;color:var(--pink);font-size:13px;margin-top:8px}.privacy{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding-top:16px;margin-top:19px;color:var(--muted);font-size:12px}.privacy b{color:var(--accent);font-size:15px}.result{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}.result-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.result-head strong{font-size:13px}.result pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:160px;overflow:auto;background:#10141e;border:1px solid var(--line);border-radius:10px;padding:13px;color:#c7d4ee;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;margin:0}.hidden{display:none!important}.side{display:grid;gap:18px}.how{list-style:none;padding:0;margin:20px 0 0}.how li{position:relative;padding:0 0 20px 39px;color:var(--muted);font-size:13px}.how li:last-child{padding-bottom:0}.how li:not(:last-child):before{content:"";position:absolute;left:13px;top:26px;bottom:0;border-left:1px dashed #465069}.num{position:absolute;left:0;top:0;width:27px;height:27px;border:1px solid #546079;border-radius:50%;display:grid;place-items:center;color:var(--accent);font-size:11px;font-weight:800;background:var(--panel)}.how strong{display:block;color:var(--text);font-size:13px;margin-bottom:3px}.details{display:grid;gap:12px;margin-top:18px}.detail{background:#121722;border:1px solid var(--line);padding:11px 12px;border-radius:10px}.detail small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}.detail code{font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:#c5d5f4;overflow-wrap:anywhere}.empty{color:var(--muted);font-size:13px;padding:13px;background:#121722;border:1px dashed #394158;border-radius:10px;margin-top:17px}.note{border-left:3px solid #e8c275;background:#29251d;padding:13px 15px;border-radius:0 10px 10px 0;color:#d9cda9;font-size:12px}.note strong{color:#f3dfa9}.explain{margin-top:18px}.explain p{font-size:13px;color:var(--muted);margin:7px 0}.explain code{color:var(--accent);font-size:12px}.footer{color:#747e95;text-align:center;font-size:12px;margin:30px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:800px){.layout{grid-template-columns:1fr}.topbar{margin-bottom:45px}.hero{margin-bottom:26px}}@media(max-width:480px){.shell{padding:22px 14px 48px}.topbar{margin-bottom:38px}.card{padding:19px}.tag{font-size:10px}.actions>*{flex:1}.hero p{font-size:15px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><div class="brand-mark" aria-hidden="true">⌁</div><span>CriptoLab</span></div><div class="tag">DEMO INTERATIVA · 100% NO NAVEGADOR</div></header>
+    <section class="hero"><div class="eyebrow">Entenda fazendo</div><h1>Seus dados, <span>em código.</span></h1><p>Digite uma senha, frase ou código e veja como a criptografia transforma o texto — e como ele pode ser recuperado com a chave certa.</p></section>
+    <div class="layout">
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Experimente a criptografia</h2><p class="sub">Letras, números, espaços e símbolos são aceitos.</p>
+        <form id="encrypt-form" novalidate>
+          <div class="field"><div class="label-row"><label for="plain">Texto para proteger</label><span class="hint">não use uma senha real</span></div><textarea id="plain" placeholder="Ex.: Meu código é #Lab2026!" autocomplete="off" spellcheck="false" required></textarea></div>
+          <div class="field"><div class="label-row"><label for="secret">Chave secreta</label><span class="hint">será necessária para descriptografar</span></div><div class="input-wrap"><input id="secret" class="with-toggle" type="password" placeholder="Crie uma chave forte" autocomplete="new-password" required><button class="toggle" type="button" data-toggle="secret" aria-label="Mostrar chave secreta">Mostrar</button></div></div>
+          <div class="actions"><button class="primary" type="submit">⌁ Criptografar</button><button class="secondary" id="fill-demo" type="button">Usar exemplo</button></div><div id="encrypt-error" class="feedback" role="alert"></div>
+        </form>
+        <div id="encrypted-result" class="result hidden"><div class="result-head"><strong>Texto criptografado (token)</strong><button class="copy" type="button" data-copy="token">Copiar</button></div><pre id="token-output"></pre></div>
+        <div class="privacy"><b aria-hidden="true">◉</b><span>O processamento acontece localmente no seu navegador. O texto e a chave não são enviados a um servidor nem armazenados por esta página.</span></div>
+      </section>
+      <aside class="side">
+        <section class="card" aria-labelledby="decrypt-title"><h2 id="decrypt-title">Descriptografe um token</h2><p class="sub">Cole o token gerado acima e informe a mesma chave.</p>
+          <form id="decrypt-form" novalidate>
+            <div class="field"><div class="label-row"><label for="token-input">Token criptografado</label></div><textarea id="token-input" placeholder="Cole aqui o token" autocomplete="off" spellcheck="false" required></textarea></div>
+            <div class="field"><div class="label-row"><label for="decrypt-secret">Chave secreta</label></div><div class="input-wrap"><input id="decrypt-secret" class="with-toggle" type="password" placeholder="A chave usada na criptografia" autocomplete="off" required><button class="toggle" type="button" data-toggle="decrypt-secret" aria-label="Mostrar chave secreta">Mostrar</button></div></div>
+            <div class="actions"><button class="primary" type="submit">↗ Descriptografar</button></div><div id="decrypt-error" class="feedback" role="alert"></div>
+          </form>
+          <div id="decrypted-result" class="result hidden"><div class="result-head"><strong>Texto original recuperado</strong><button class="copy" type="button" data-copy="plaintext">Copiar</button></div><pre id="plaintext-output"></pre></div>
+        </section>
+        <section class="card" aria-labelledby="steps-title"><h2 id="steps-title">O que acontece por trás?</h2><p class="sub">Uma forma segura e moderna de proteger dados no navegador.</p>
+          <ol class="how"><li><span class="num">01</span><strong>Texto → bytes</strong>O texto é convertido em bytes usando UTF-8, preservando letras e símbolos.</li><li><span class="num">02</span><strong>Chave derivada</strong>PBKDF2 transforma sua chave em uma chave de 256 bits, com salt aleatório e SHA-256 repetido 310 mil vezes.</li><li><span class="num">03</span><strong>AES-GCM</strong>O algoritmo cifra os bytes com a chave derivada e um IV aleatório. Também autentica os dados para detectar alterações.</li><li><span class="num">04</span><strong>Token transportável</strong>Salt, IV e texto cifrado são reunidos e codificados em Base64URL. A codificação não é criptografia.</li><li><span class="num">05</span><strong>Volta ao original</strong>Na descriptografia, o salt recria a mesma chave; o IV permite abrir o conteúdo. Chave incorreta ou token alterado causa falha.</li></ol>
+        </section>
+        <section class="card" aria-labelledby="trace-title"><h2 id="trace-title">Rastreamento da última operação</h2><p class="sub">Parâmetros públicos usados para demonstrar o processo.</p><div id="trace" class="empty">Criptografe um texto para ver os detalhes técnicos.</div></section>
+        <div class="note"><strong>Importante:</strong> demonstração educativa. Não reutilize senhas reais nem use este site como cofre de senhas. AES-GCM é reversível quando há chave; hash de senha não é o mesmo que criptografia.</div>
+      </aside>
+    </div>
+    <footer class="footer">Feito para aprender · Web Crypto API · AES-256-GCM + PBKDF2-SHA-256</footer>
+  </main>
+<script>
+(() => {
+  'use strict';
+  const ITERATIONS = 310000;
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+  const byId = id => document.getElementById(id);
+  let latestToken = '';
+  let latestPlaintext = '';
+
+  function toBase64Url(bytes) {
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+  }
+  function fromBase64Url(text) {
+    if (!/^[A-Za-z0-9_-]+$/.test(text)) throw new Error('Formato inválido.');
+    const base64 = text.replace(/-/g, '+').replace(/_/g, '/');
+    const binary = atob(base64 + '='.repeat((4 - base64.length % 4) % 4));
+    return Uint8Array.from(binary, char => char.charCodeAt(0));
+  }
+  function randomBytes(length) {
+    const bytes = new Uint8Array(length);
+    crypto.getRandomValues(bytes);
+    return bytes;
+  }
+  async function deriveKey(password, salt) {
+    const material = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: ITERATIONS, hash: 'SHA-256' }, material, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+  }
+  function setError(id, message) { byId(id).textContent = message; }
+  function renderTrace(salt, iv, encrypted, mode) {
+    const el = byId('trace');
+    el.className = 'details';
+    el.innerHTML = '';
+    const items = [
+      ['Operação', mode],
+      ['KDF', `PBKDF2 · SHA-256 · ${ITERATIONS.toLocaleString('pt-BR')} iterações`],
+      ['Cifra', 'AES-256-GCM'],
+      ['Salt aleatório · 16 bytes', toBase64Url(salt)],
+      ['IV aleatório · 12 bytes', toBase64Url(iv)],
+      ['Dados cifrados · Base64URL', toBase64Url(encrypted)]
+    ];
+    for (const [label, value] of items) {
+      const box = document.createElement('div'); box.className = 'detail';
+      const small = document.createElement('small'); small.textContent = label;
+      const code = document.createElement('code'); code.textContent = value;
+      box.append(small, code); el.append(box);
+    }
+  }
+
+  byId('encrypt-form').addEventListener('submit', async event => {
+    event.preventDefault(); setError('encrypt-error', '');
+    const plaintext = byId('plain').value;
+    const password = byId('secret').value;
+    if (!plaintext.length) return setError('encrypt-error', 'Digite o texto que deseja proteger.');
+    if (!password.length) return setError('encrypt-error', 'Digite uma chave secreta.');
+    if (!globalThis.crypto?.subtle) return setError('encrypt-error', 'Web Crypto não está disponível. Abra o site em HTTPS ou em localhost.');
+    try {
+      const salt = randomBytes(16), iv = randomBytes(12);
+      const key = await deriveKey(password, salt);
+      const ciphertext = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, encoder.encode(plaintext)));
+      const token = toBase64Url(encoder.encode(JSON.stringify({ v: 1, s: toBase64Url(salt), i: toBase64Url(iv), d: toBase64Url(ciphertext) })));
+      latestToken = token;
+      byId('token-output').textContent = token;
+      byId('encrypted-result').classList.remove('hidden');
+      byId('token-input').value = token;
+      byId('decrypt-secret').value = password;
+      setError('decrypt-error', ''); byId('decrypted-result').classList.add('hidden');
+      renderTrace(salt, iv, ciphertext, 'Criptografia concluída');
+    } catch (error) {
+      console.error(error); setError('encrypt-error', 'Não foi possível criptografar. Verifique se o navegador oferece suporte à Web Crypto API.');
+    }
+  });
+
+  byId('decrypt-form').addEventListener('submit', async event => {
+    event.preventDefault(); setError('decrypt-error', '');
+    const token = byId('token-input').value.trim();
+    const password = byId('decrypt-secret').value;
+    if (!token || !password) return setError('decrypt-error', 'Informe o token e a chave secreta.');
+    if (!globalThis.crypto?.subtle) return setError('decrypt-error', 'Web Crypto não está disponível. Abra o site em HTTPS ou em localhost.');
+    try {
+      const parsed = JSON.parse(decoder.decode(fromBase64Url(token)));
+      if (parsed.v !== 1 || typeof parsed.s !== 'string' || typeof parsed.i !== 'string' || typeof parsed.d !== 'string') throw new Error('Formato de token inválido.');
+      const salt = fromBase64Url(parsed.s), iv = fromBase64Url(parsed.i), ciphertext = fromBase64Url(parsed.d);
+      if (salt.length !== 16 || iv.length !== 12 || ciphertext.length < 16) throw new Error('Parâmetros inválidos.');
+      const key = await deriveKey(password, salt);
+      const clear = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+      latestPlaintext = decoder.decode(clear);
+      byId('plaintext-output').textContent = latestPlaintext;
+      byId('decrypted-result').classList.remove('hidden');
+      renderTrace(salt, iv, ciphertext, 'Descriptografia autenticada com sucesso');
+    } catch (error) {
+      console.error(error);
+      byId('decrypted-result').classList.add('hidden');
+      setError('decrypt-error', 'Não foi possível descriptografar. Confira a chave e o token: eles podem estar incorretos ou alterados.');
+    }
+  });
+
+  document.querySelectorAll('[data-toggle]').forEach(button => button.addEventListener('click', () => {
+    const input = byId(button.dataset.toggle), visible = input.type === 'password';
+    input.type = visible ? 'text' : 'password'; button.textContent = visible ? 'Ocultar' : 'Mostrar';
+    button.setAttribute('aria-label', visible ? 'Ocultar chave secreta' : 'Mostrar chave secreta');
+  }));
+  document.querySelectorAll('[data-copy]').forEach(button => button.addEventListener('click', async () => {
+    const value = button.dataset.copy === 'token' ? latestToken : latestPlaintext;
+    if (!value) return;
+    try { await navigator.clipboard.writeText(value); button.textContent = 'Copiado!'; setTimeout(() => { button.textContent = 'Copiar'; }, 1400); }
+    catch { button.textContent = 'Falha ao copiar'; setTimeout(() => { button.textContent = 'Copiar'; }, 1400); }
+  }));
+  byId('fill-demo').addEventListener('click', () => {
+    byId('plain').value = 'Meu código é #Lab2026!';
+    byId('secret').value = 'Chave-de-exemplo-42';
+    byId('encrypt-error').textContent = '';
+  });
+})();
+</script>
+</body>
+</html>
